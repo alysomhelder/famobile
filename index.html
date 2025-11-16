@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAMOBILE - Plataforma de Estudos</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    </head>
+<body>
+    
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <i class='bx bxs-graduation'></i>
+            <h1>FAMOBILE</h1>
+        </div>
+    </div>
+    
+    <div class="login-container" id="login-container" style="display: none;">
+        <div class="login-card">
+            <div class="logo-login">
+                <i class='bx bxs-graduation'></i>
+                <span>FAMOBILE</span>
+            </div>
+            <h2>Acesso do Aluno</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" id="username" placeholder="Usuário (aluno)" required>
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="password" id="password" placeholder="Senha (ihc)" required>
+                </div>
+                <button type="submit" class="login-btn new-post-btn">Entrar</button>
+            </form>
+            <p id="error-message" style="color: #ef4444; margin-top: 10px; display: none;">Usuário ou senha inválidos.</p>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard" style="display: none;">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class='bx bxs-graduation'></i>
+                <span>FAMOBILE</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="sidebar-item-active" data-section="disciplina"><i class='bx bxs-home'></i> Início </a>
+                <a href="#" data-section="calendario" title="Calendário"><i class='bx bxs-calendar'></i> Calendário</a>
+                <a href="#" data-section="minhas-disciplinas" title="Minhas Disciplinas"><i class='bx bxs-book-bookmark'></i> Minhas Disciplinas</a>
+                <a href="#" data-section="comunicacao" title="Comunicação"><i class='bx bxs-message-dots'></i> Comunicação</a>
+                <a href="#" data-section="notificacoes" title="Notificações"><i class='bx bxs-bell'></i> Notificações</a>
+                <a href="#" data-section="configuracoes" title="Configurações"><i class='bx bxs-cog'></i> Configurações</a>
+            </nav>
+            
+            <a href="https://drive.google.com/uc?export=download&id=1bTkN682MNDsz4n4Fv5zquGZEtBjLwB12" download="FAMOBILE_APP.apk" target="_blank" title="Download do App Oficial" class="download-button">
+                <i class='bx bxs-download'></i> Download do App
+            </a>
+            </aside>
+
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <main class="main-content">
+            
+            <header class="top-bar">
+                <i class='bx bx-menu menu-toggle' id="menu-toggle" title="Abrir Menu Lateral"></i> 
+                <div class="search-box">
+                    <i class='bx bx-search'></i>
+                    <input type="text" placeholder="Pesquisar disciplinas, tarefas ou materiais...">
+                </div>
+                <div class="user-actions">
+                    <i class='bx bxs-sun theme-toggle' id="theme-toggle" title="Alternar Modo Claro/Escuro"></i> 
+                    <i class='bx bxs-microphone accessibility-toggle' id="microphone-toggle" title="Ativar/Desativar Reconhecimento de Voz"></i>
+                    <i class='bx bxs-low-vision accessibility-toggle' id="contrast-toggle" title="Ativar/Desativar Alto Contraste e Leitor de Tela"></i>
+                    <i class='bx bxs-bell' title="Notificações"></i>
+                    <i class='bx bxs-user-circle' id="profile-icon" title="Perfil do Usuário"></i>
+                </div>
+            </header>
+            
+            <section class="disciplina-container active-section" data-section-content="disciplina">
+                
+                <div class="card mb-20" id="progress-summary-card" style="border-left: 5px solid var(--primary-light); display: none;">
+                    <h2 style="font-size: 18px; margin-bottom: 10px; color: var(--primary-color);">📈 Resumo de Progresso Semanal</h2>
+                    <p id="progress-message" style="color: var(--text-light); font-weight: 600; margin-bottom: 5px;">...</p>
+                    <p id="progress-detail" style="font-size: 14px; color: var(--text-gray);">...</p>
+                </div>
+                <div class="disciplina-header-selector">
+                    <label for="disciplina-select" style="font-size: 14px; color: var(--text-gray); display: block; margin-bottom: 5px;">Escolha a matéria:</label>
+                    <select id="disciplina-select" title="Escolher Disciplina">
+                        <optgroup label="3º Semestre (Em Curso)">
+                            <option value="ihm" selected>Interface Homem Máquina</option>
+                            <option value="lpoo">Linguagem de Programação Orientada a Objetos</option>
+                            <option value="es">Engenharia de Software</option>
+                            <option value="redes-comp">Redes de Computadores</option>
+                            <option value="so">Sistemas Operacionais</option>
+                            <option value="dir-humanos">Direitos Humanos, Cultura e Diversidade</option>
+                            <option value="proj-ext-redes">Projeto de Extensão: Laboratório Prático em Redes</option>
+                        </optgroup>
+                        <optgroup label="2º Semestre (Concluído)">
+                            <option value="fund-aps">Fundamentos de Análise e Projeto de Sistemas</option>
+                            <option value="logica-matematica">Lógica Matemática</option>
+                            <option value="org-arq">Organização e Arquitetura de Computadores</option>
+                            <option value="comunicacao">Comunicação Assertiva e Interpessoal</option>
+                            <option value="fund-bd">Fundamentos de Bancos de Dados</option>
+                            <option value="logica-prog">Lógica de Programação</option>
+                        </optgroup>
+                        <optgroup label="4º Semestre (Próximo)">
+                            <option value="tec-impl-bd">Técnicas de Implementação de Banco de Dados</option>
+                            <option value="proj-ext-bd">Projeto de Extensão: Laboratório Prático de Banco de Dados</option>
+                            <option value="teste-software">Teste de Software</option>
+                            <option value="proj-ext-mercado">Projeto de Extensão: Prática Profissional e Inovação</option>
+                        </optgroup>
+                        <optgroup label="5º Semestre (Futuro)">
+                            <option value="metodos-avancados">Métodos Avançados de Programação</option>
+                            <option value="dev-corporativo">Desenvolvimento de Aplicações Corporativas</option>
+                            <option value="sistemas-distribuidos">Sistemas Distribuídos</option>
+                            <option value="cloud">Computação em Nuvens</option>
+                            <option value="cyber">Cyber Security</option>
+                            <option value="proj-ext-empresas">Projeto de Extensão: Projetos Para Empresas</option>
+                            <option value="topicos-especiais">Tópicos Especiais em Sistemas de Informação</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div id="disciplina-content-wrapper">
+                    
+                    <div class="disciplina-content active" data-disciplina="ihm">
+                        
+                        <nav class="disciplina-tabs" role="tablist">
+                            <a href="#" class="tab-active" data-tab="mural-ihm" role="tab" aria-selected="true">Mural</a>
+                            <a href="#" data-tab="tarefas-ihm" role="tab">Tarefas</a>
+                            <a href="#" data-tab="materiais-ihm" role="tab">Materiais</a>
+                            <a href="#" data-tab="notas-ihm" role="tab">Notas</a>
+                            <a href="#" data-tab="grupo-ihm" role="tab">Grupo</a>
+                        </nav>
+
+                        <div class="grid-layout active-tab" data-tab-content="mural-ihm">
+                            
+                            <div class="card mural-card">
+                                <div class="mural-item post-professor" role="button" tabindex="0">
+                                    <div class="mural-header">
+                                        <img src="gaby.png" alt="Prof(a). Gabriely" class="avatar">
+                                        <div><h3>Prof(a). Gabriely</h3><span class="date">26 de Outubro</span></div>
+                                    </div>
+                                    <p>Olá, alunos! O trabalho final de UX/UI foi atualizado com as novas diretrizes. Leiam o material da Aula 5 e assistam a gravação da última aula. Qualquer dúvida, postem aqui!</p>
+                                    <button class="options-btn" aria-label="Opções da postagem"><i class='bx bx-dots-vertical-rounded'></i></button>
+                                </div>
+                                
+                                <div class="mural-item material-item" title="Material da Aula 5 - Prototipação e Testes de Usabilidade (PDF)">
+                                    <i class='bx bxs-file-pdf'></i>
+                                    <p>Material da Aula 5 - Prototipação e Testes de Usabilidade (PDF)</p>
+                                    
+                                    <a href="materiais/aula05.pdf" download class="options-btn" aria-label="Baixar material">
+                                        <i class='bx bx-download'></i>
+                                    </a>
+                                </div>
+                                
+                                <div class="mural-item post-aluno" role="button" tabindex="0">
+                                    <div class="mural-header">
+                                        <img src="alysom.png" alt="Alysom" class="avatar">
+                                        <div><h3>Alysom</h3><span class="date">26 de Outubro</span></div>
+                                    </div>
+                                    <p>Professora, por que o Gustavo é tão ruim nessa matéria?</p>
+                                    <button class="options-btn" aria-label="Opções da postagem"><i class='bx bx-dots-vertical-rounded'></i></button>
+                                </div>
+
+                                <div class="mural-new-message">
+                                    <i class='bx bxs-paper-plane' title="Enviar mensagem"></i>
+                                    <input type="text" placeholder="Escreva uma mensagem ou dúvida...">
+                                </div>
+                            </div>
+
+                            <div class="side-content">
+                                <div class="card next-deliveries-card mb-20">
+                                    <h2>Próximas Entregas (IHM)</h2>
+                                    <div class="delivery-item" role="button" tabindex="0" title="Trabalho Final de UX/UI. Prazo: 18 de fevereiro.">
+                                        <div class="item-details"><h3>Trabalho Final - UX/UI</h3><p class="due-date">Prazo: 18/02 às 20:40</p></div><i class='bx bx-chevron-right'></i>
+                                    </div>
+                                    <div class="delivery-item" role="button" tabindex="0" title="Quiz 2 sobre Leis de Hick e Fitts. Prazo: 5 de março.">
+                                        <div class="item-details"><h3>Quiz 2 - Leis de Hick e Fitts</h3><p class="due-date">Prazo: 05/03 às 23:59</p></div><i class='bx bx-chevron-right'></i>
+                                    </div>
+                                </div>
+
+                                <div class="card classmates-card">
+                                    <h2>Colegas de Turma</h2>
+                                    <div class="classmates-list">
+                                        <div class="classmate-item" role="button" tabindex="0" title="Mike">
+                                            <img src="mike.png" alt="Mike" class="avatar-small">
+                                            <p>Mike</p>
+                                        </div>
+                                        <div class="classmate-item" role="button" tabindex="0" title="Patrick">
+                                            <img src="patrik.png" alt="Patrick" class="avatar-small">
+                                            <p>Patrick</p>
+                                        </div>
+                                        <div class="classmate-item" role="button" tabindex="0" title="Stefany">
+                                            <img src="stefany.png" alt="Stefany" class="avatar-small">
+                                            <p>Stefany</p>
+                                        </div>
+                                        <div class="classmate-item" role="button" tabindex="0" title="Alysom">
+                                            <img src="alysom.png" alt="Alysom" class="avatar-small">
+                                            <p>Alysom</p>
+                                        </div>
+                                    </div>
+                                    <button class="new-post-btn" title="Criar Nova Postagem"><i class='bx bx-plus'></i>Nova Postagem</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-tab-content="tarefas-ihm" style="display: none;"><p class="card" style="margin-top:20px; padding: 20px;">Tarefas de Interface Homem Máquina...</p></div>
+                        <div data-tab-content="materiais-ihm" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Conteúdo de Materiais (IHM)...</p></div>
+                        
+                        <div data-tab-content="notas-ihm" style="display:none;">
+                            <div class="card" style="margin-top:20px; padding: 25px;">
+                                <h2 style="margin-bottom: 20px; font-size: 24px; color: var(--primary-color);">Painel de Notas: Interface Homem Máquina</h2>
+                                <div class="tasks-list">
+                                    <div class="task-item completed" style="cursor: default;" title="Nota na AV1: 9.0">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV1</h3><p>Avaliação 1</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: var(--primary-color); font-weight: 700;">Nota: 9.0</span></div>
+                                    </div>
+                                    <div class="task-item urgent" style="border-left-color: #ef4444; cursor: default;" title="Nota na AV2: 5.0">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV2</h3><p>Avaliação 2</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: #ef4444; font-weight: 700;">Nota: 5.0</span></div>
+                                    </div>
+                                    <div class="task-item pending" style="border-left-color: #f59e0b; cursor: default;" title="AV3 ainda não lançada.">
+                                        <div class="task-info"><i class='bx bxs-time-five'></i><div><h3>AV3</h3><p>Avaliação 3</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: #f59e0b; font-weight: 700;">Nota: --</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-tab-content="grupo-ihm" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Conteúdo de Grupo (IHM)...</p></div>
+                    </div>
+                    
+                    <div class="disciplina-content" data-disciplina="lpoo" style="display: none;">
+                        
+                        <nav class="disciplina-tabs" role="tablist">
+                            <a href="#" class="tab-active" data-tab="mural-lpoo" role="tab" aria-selected="true">Mural</a>
+                            <a href="#" data-tab="tarefas-lpoo" role="tab">Próximas Tarefas</a>
+                            <a href="#" data-tab="materiais-lpoo" role="tab">Slides e Aulas</a>
+                            <a href="#" data-tab="notas-lpoo" role="tab">Notas</a>
+                        </nav>
+
+                        <div class="grid-layout active-tab" data-tab-content="mural-lpoo">
+                            
+                            <div class="card mural-card">
+                                <div class="mural-item post-professor" role="button" tabindex="0">
+                                    <div class="mural-header">
+                                        <img src="bruce.png" alt="Prof. Bruce Banner" class="avatar">
+                                        <div><h3>Prof. Bruce Banner (LPOO)</h3><span class="date">28 de Outubro</span></div>
+                                    </div>
+                                    <p>Bem-vindos à LPOO! Próxima aula cobrirá os conceitos de Herança e Polimorfismo. Não esqueçam de revisar o Capítulo 3 do material.</p>
+                                    <button class="options-btn" aria-label="Opções da postagem"><i class='bx bx-dots-vertical-rounded'></i></button>
+                                </div>
+                                
+                                <div class="mural-new-message">
+                                    <i class='bx bxs-paper-plane' title="Enviar mensagem"></i>
+                                    <input type="text" placeholder="Escreva uma mensagem ou dúvida...">
+                                </div>
+                            </div>
+
+                            <div class="side-content">
+                                <div class="card next-deliveries-card mb-20">
+                                    <h2>Próximas Entregas (LPOO)</h2>
+                                    <div class="delivery-item" role="button" tabindex="0" title="Prova 1. Prazo: 12 de Dezembro.">
+                                        <div class="item-details"><h3>Prova 1 - Conceitos Fundamentais</h3><p class="due-date">Prazo: 12/12 às 22:00</p></div><i class='bx bx-chevron-right'></i>
+                                    </div>
+                                </div>
+
+                                <div class="card classmates-card">
+                                    <h2>Colegas de Turma</h2>
+                                    <div class="classmates-list">
+                                        <div class="classmate-item" role="button" tabindex="0" title="Alysom"><img src="alysom.png" alt="Colega 1" class="avatar-small"><p>Alysom</p></div>
+                                    </div>
+                                    <button class="new-post-btn" title="Criar Nova Postagem"><i class='bx bx-plus'></i>Nova Postagem</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div data-tab-content="tarefas-lpoo" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Tarefas de LPOO...</p></div>
+                        <div data-tab-content="materiais-lpoo" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Materiais de LPOO...</p></div>
+                        <div data-tab-content="notas-lpoo" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Notas de LPOO...</p></div>
+                    </div>
+                    
+                    <div class="disciplina-content" data-disciplina="es" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-es" role="tab" aria-selected="true">Mural</a><a href="#" data-tab="tarefas-es" role="tab">Tarefas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-es"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Engenharia de Software. Foco em requisitos e modelagem UML.</p></div><div class="side-content"><div class="card next-deliveries-card"><h2>Próximas Entregas</h2><div class="delivery-item"><h3>Entrega de UML</h3><p class="due-date">Prazo: 15/12</p></div></div></div></div>
+                        <div data-tab-content="tarefas-es" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Tarefas de Engenharia de Software...</p></div>
+                    </div>
+
+                    <div class="disciplina-content" data-disciplina="redes-comp" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-rc" role="tab" aria-selected="true">Mural</a><a href="#" data-tab="notas-rc" role="tab">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-rc"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Redes de Computadores...</p></div><div class="side-content"><div class="card next-deliveries-card"><h2>Próximas Entregas</h2><div class="delivery-item"><h3>Protocolos TCP/IP</h3><p class="due-date">Quiz: 20/12</p></div></div></div></div>
+                        <div data-tab-content="notas-rc" style="display:none;">
+                            <div class="card" style="margin-top:20px; padding: 25px;">
+                                <h2 style="margin-bottom: 20px; font-size: 24px; color: var(--primary-color);">Painel de Notas: Redes de Computadores</h2>
+                                <div class="tasks-list">
+                                    <div class="task-item completed" style="cursor: default;" title="Nota na AV1: 8.0">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV1</h3><p>Avaliação 1</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: var(--primary-color); font-weight: 700;">Nota: 8.0</span></div>
+                                    </div>
+                                    <div class="task-item pending" style="border-left-color: #f59e0b; cursor: default;" title="Nota na AV2: 7.9">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV2</h3><p>Avaliação 2</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: #f59e0b; font-weight: 700;">Nota: 7.9</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="disciplina-content" data-disciplina="so" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-so" role="tab" aria-selected="true">Mural</a><a href="#" data-tab="notas-so" role="tab">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-so"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Sistemas Operacionais...</p></div><div class="side-content"><div class="card next-deliveries-card"><h2>Informações</h2><div class="delivery-item"><h3>Próximo Tópico</h3><p class="due-date">Gerenciamento de Memória</p></div></div></div></div>
+                        <div data-tab-content="notas-so" style="display:none;">
+                            <div class="card" style="margin-top:20px; padding: 25px;">
+                                <h2 style="margin-bottom: 20px; font-size: 24px; color: var(--primary-color);">Painel de Notas: Sistemas Operacionais</h2>
+                                <div class="tasks-list">
+                                    <div class="task-item completed" style="cursor: default;" title="Nota na AV1: 8.5">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV1</h3><p>Avaliação 1</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: var(--primary-color); font-weight: 700;">Nota: 8.5</span></div>
+                                    </div>
+                                    <div class="task-item completed" style="cursor: default;" title="Nota na AV2: 9.3">
+                                        <div class="task-info"><i class='bx bxs-file-check'></i><div><h3>AV2</h3><p>Avaliação 2</p></div></div>
+                                        <div class="task-meta"><span class="due-date-label" style="color: var(--primary-color); font-weight: 700;">Nota: 9.3</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="dir-humanos" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-dh" role="tab" aria-selected="true">Mural</a><a href="#" data-tab="tarefas-dh" role="tab">Tarefas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-dh"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Direitos Humanos, Cultura e Diversidade...</p></div></div>
+                        <div data-tab-content="tarefas-dh" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Tarefas de Direitos Humanos, Cultura e Diversidade...</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="proj-ext-redes" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-per" role="tab" aria-selected="true">Mural</a><a href="#" data-tab="tarefas-per" role="tab">Tarefas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-per"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Projeto de Extensão: Laboratório Prático em Redes...</p></div></div>
+                        <div data-tab-content="tarefas-per" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Tarefas de Projeto de Extensão: Laboratório Prático em Redes...</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="fund-aps" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-faps" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-faps" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-faps"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Concluída. Nota na AV1: 10</p><p class="card" style="padding: 20px;">Mural de Fundamentos de Análise e Projeto de Sistemas...</p></div></div>
+                        <div data-tab-content="notas-faps" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Nota Final (Simulada): 10.0</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="logica-matematica" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-lm" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-lm" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-lm"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Concluída. Nota na AV1: 8</p><p class="card" style="padding: 20px;">Mural de Lógica Matemática...</p></div></div>
+                        <div data-tab-content="notas-lm" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Nota Final (Simulada): 8.0</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="org-arq" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-oa" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-oa" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-oa"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Aprovada. Média: 8.33</p><p class="card" style="padding: 20px;">Mural de Organização e Arquitetura de Computadores...</p></div></div>
+                        <div data-tab-content="notas-oa" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Média: 8.33. Aprovado.</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="comunicacao" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-ca" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-ca" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-ca"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Aprovada. Média: 9.0</p><p class="card" style="padding: 20px;">Mural de Comunicação Assertiva e Interpessoal...</p></div></div>
+                        <div data-tab-content="notas-ca" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Média: 9.0. Aprovado.</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="fund-bd" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-fbd" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-fbd" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-fbd"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Aprovada. Média: 8.66</p><p class="card" style="padding: 20px;">Mural de Fundamentos de Bancos de Dados...</p></div></div>
+                        <div data-tab-content="notas-fbd" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Média: 8.66. Aprovado.</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="logica-prog" style="display: none;">
+                        <nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-lp" role="role" aria-selected="true">Mural</a><a href="#" data-tab="notas-lp" role="role">Notas</a></nav>
+                        <div class="grid-layout active-tab" data-tab-content="mural-lp"><div class="card mural-card"><p class="card" style="margin-bottom:15px; background-color: var(--accent-color);">Disciplina Aprovada. Média: 6.26</p><p class="card" style="padding: 20px;">Mural de Lógica de Programação...</p></div></div>
+                        <div data-tab-content="notas-lp" style="display:none;"><p class="card" style="margin-top:20px; padding: 20px;">Média: 6.26. Aprovado.</p></div>
+                    </div>
+                    <div class="disciplina-content" data-disciplina="tec-impl-bd" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-tibd" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-tibd"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Técnicas de Implementação de Banco de Dados...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="proj-ext-bd" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-pebd" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-pebd"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Projeto de Extensão: Laboratório Prático de Banco de Dados...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="teste-software" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-ts" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-ts"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Teste de Software...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="proj-ext-mercado" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-pem" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-pem"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Projeto de Extensão: Prática Profissional e Inovação...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="metodos-avancados" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-ma" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-ma"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Métodos Avançados de Programação...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="dev-corporativo" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-dc" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-dc"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Desenvolvimento de Aplicações Corporativas...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="sistemas-distribuidos" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-sd" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-sd"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Sistemas Distribuídos...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="cloud" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-cn" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-cn"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Computação em Nuvens...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="cyber" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-cs" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-cs"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Cyber Security...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="proj-ext-empresas" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-pee" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-pee"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Projeto de Extensão: Projetos Para Empresas...</p></div></div></div>
+                    <div class="disciplina-content" data-disciplina="topicos-especiais" style="display: none;"><nav class="disciplina-tabs" role="tablist"><a href="#" class="tab-active" data-tab="mural-tee" role="role" aria-selected="true">Mural</a></nav><div class="grid-layout active-tab" data-tab-content="mural-tee"><div class="card mural-card"><p class="card" style="padding: 20px;">Mural de Tópicos Especiais em Sistemas de Informação...</p></div></div></div>
+                </div>
+            </section>
+
+            <section class="calendario-container" data-section-content="calendario" style="display: none;">
+                <h1>Calendário</h1> 
+                
+                <div class="calendar-grid">
+                    <div class="card calendar-view">
+                        <div class="calendar-nav"><i class='bx bx-chevron-left' title="Mês Anterior"></i><h2>Outubro 2025</h2><i class='bx bx-chevron-right' title="Próximo Mês"></i></div>
+                        
+                        <div class="calendar-main">
+                            <div class="days-of-week">
+                                <span>DOM</span>
+                                <span>SEG</span>
+                                <span>TER</span>
+                                <span>QUA</span>
+                                <span>QUI</span>
+                                <span>SEX</span>
+                                <span>SAB</span>
+                            </div>
+                            
+                            <div class="dates-grid">
+                                <span class="faded">28</span><span class="faded">29</span><span class="faded">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
+                                <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                                <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                                <span>19</span><span>20</span><span>21</span><span>22</span><span class="active-date">23</span><span class="active-date">24</span>
+                                <span class="today-date blue-dot red-dot green-dot" title="Dia 25 com eventos">25</span><span class="event-date blue-dot" title="Dia 26 com evento">26</span><span class="event-date red-dot" title="Dia 27 com evento">27</span>
+                                <span class="event-date blue-dot" title="Dia 28 com evento">28</span><span class="event-date blue-dot" title="Dia 29 com evento">29</span><span>30</span><span>31</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card event-list-sidebar">
+                        <h2>Eventos de 25/Out</h2>
+                        <div class="event-item blue-border" title="Aula Síncrona: Interface Homem Máquina, das 19:30 às 21:00."><i class='bx bxs-book-bookmark'></i><div><h3>Aula Síncrona: Fundamentos de IHM</h3><p>Interface Homem Máquina - 19:30 às 21:00</p></div></div>
+                        <div class="event-item red-border" title="Entrega do Trabalho 1 de Desenvolvimento Web. Prazo final."><i class='bx bxs-edit-alt'></i><div><h3>Entrega do Trabalho 1</h3><p>Desenvolvimento Web - Prazo final</p></div></div>
+                        <div class="event-item green-border" title="Reunião de Grupo para Projeto de Usabilidade, às 18:00."><i class='bx bxs-group'></i><div><h3>Reunião de Grupo</h3><p>Projeto de Usabilidade - 18:00</p></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-section-content="minhas-disciplinas" style="display: none;">
+                <h1 style="padding-top:20px;">Minhas Disciplinas (Grade Curricular)</h1>
+                
+                <div class="card" style="padding: 20px;">
+                    <h2>Grade Curricular Completa</h2>
+                    <p style="color: var(--text-gray); margin-bottom: 30px;">Disciplinas do curso divididas por semestre.</p>
+                    
+                    
+                    <h3 style="margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; color: var(--primary-color);">2º Semestre (Concluído)</h3>
+                    <div class="tasks-list">
+                        <div class="task-item completed" title="Disciplina concluída: Fundamentos de Análise e Projeto de Sistemas. Nota AV1: 10.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Fundamentos de Análise e Projeto de Sistemas</h3><p>Nota AV1: 10</p></div></div>
+                            <div class="task-meta"><span class="status">Concluída</span></div>
+                        </div>
+                        <div class="task-item completed" title="Disciplina concluída: Lógica Matemática. Nota AV1: 8.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Lógica Matemática</h3><p>Nota AV1: 8</p></div></div>
+                            <div class="task-meta"><span class="status">Concluída</span></div>
+                        </div>
+                        <div class="task-item completed" title="Disciplina concluída: Organização e Arquitetura de Computadores. Média: 8.33.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Organização e Arquitetura de Computadores</h3><p>Média: 8.33</p></div></div>
+                            <div class="task-meta"><span class="status">Aprovada</span></div>
+                        </div>
+                         <div class="task-item completed" title="Disciplina concluída: Comunicação Assertiva e Interpessoal. Média: 9.0.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Comunicação Assertiva e Interpessoal</h3><p>Média: 9.0</p></div></div>
+                            <div class="task-meta"><span class="status">Aprovada</span></div>
+                        </div>
+                         <div class="task-item completed" title="Disciplina concluída: Fundamentos de Bancos de Dados. Média: 8.66.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Fundamentos de Bancos de Dados</h3><p>Média: 8.66</p></div></div>
+                            <div class="task-meta"><span class="status">Aprovada</span></div>
+                        </div>
+                         <div class="task-item completed" title="Disciplina concluída: Lógica de Programação. Média: 6.26.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Lógica de Programação</h3><p>Média: 6.26</p></div></div>
+                            <div class="task-meta"><span class="status">Aprovada</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; color: var(--primary-color);">3º Semestre (Em Curso)</h3>
+                    <div class="tasks-list">
+                        <div class="task-item task-item-active-ads" title="Disciplina atual e selecionada: Interface Homem Máquina.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Interface Homem Máquina</h3><p>UX/UI e Design</p></div></div>
+                            <div class="task-meta"><span class="status">Em Foco</span></div>
+                        </div>
+                        <div class="task-item urgent" title="Disciplina em curso: Linguagem de Programação Orientada a Objetos.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Linguagem de Programação Orientada a Objetos</h3><p>Java/Python</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina em curso: Engenharia de Software.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Engenharia de Software</h3><p>Requisitos e UML</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina em curso: Redes de Computadores.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Redes de Computadores</h3><p>Protocolos e Infraestrutura</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina em curso: Sistemas Operacionais.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Sistemas Operacionais</h3><p>Kernel e Processos</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina em curso: Direitos Humanos, Cultura e Diversidade.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Direitos Humanos, Cultura e Diversidade</h3><p>Cultura e Ética</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina em curso: Projeto de Extensão: Laboratório Prático em Redes.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Projeto de Extensão: Laboratório Prático em Redes</h3><p>Atividade Prática</p></div></div>
+                            <div class="task-meta"><span class="status">Em Curso</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; color: var(--primary-color);">4º Semestre (Próximo)</h3>
+                    <div class="tasks-list">
+                        <div class="task-item pending" title="Disciplina futura: Técnicas de Implementação de Banco de Dados.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Técnicas de Implementação de Banco de Dados</h3><p>SQL Avançado e NoSQL</p></div></div>
+                            <div class="task-meta"><span class="status">Próximo</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Projeto de Extensão: Laboratório Prático de Banco de Dados.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Projeto de Extensão: Laboratório Prático de Banco de Dados</h3><p>Atividade Prática</p></div></div>
+                            <div class="task-meta"><span class="status">Próximo</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina futura: Teste de Software.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Teste de Software</h3><p>Unitário e Integração</p></div></div>
+                            <div class="task-meta"><span class="status">Próximo</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina futura: Projeto de Extensão: Prática Profissional e Inovação Para o Mercado de Trabalho.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Projeto de Extensão: Prática Profissional e Inovação</h3><p>Carreira e Mercado</p></div></div>
+                            <div class="task-meta"><span class="status">Próximo</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; color: var(--primary-color);">5º Semestre (Futuro)</h3>
+                    <div class="tasks-list">
+                        <div class="task-item pending" title="Disciplina futura: Métodos Avançados de Programação.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Métodos Avançados de Programação</h3><p>Paradigmas e Estruturas</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                        <div class="task-item pending" title="Disciplina futura: Desenvolvimento de Aplicações Corporativas.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Desenvolvimento de Aplicações Corporativas</h3><p>Sistemas Enterprise</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Sistemas Distribuídos.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Sistemas Distribuídos</h3><p>Arquitetura de Sistemas</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Computação em Nuvens.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Computação em Nuvens</h3><p>Cloud (AWS/Azure)</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Cyber Security.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Cyber Security</h3><p>Segurança da Informação</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Projeto de Extensão: Projetos Para Empresas.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Projeto de Extensão: Projetos Para Empresas</h3><p>Trabalho Final Prático</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                         <div class="task-item pending" title="Disciplina futura: Tópicos Especiais em Sistemas de Informação.">
+                            <div class="task-info"><i class='bx bxs-check-circle'></i><div><h3>Tópicos Especiais em Sistemas de Informação</h3><p>Tecnologias Emergentes</p></div></div>
+                            <div class="task-meta"><span class="status">A Agendar</span></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <section data-section-content="notificacoes" style="display: none;">
+                <h1 style="padding-top:20px;">Central de Notificações</h1>
+                <p class="card" style="padding: 20px;">Aqui você verá avisos de novas notas, prazos de entrega e posts de professores.</p>
+                <div class="card" style="margin-top:20px; padding: 20px;">
+                    <h3 style="color: var(--primary-color);">Notificações Recentes</h3>
+                    <p style="margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">[28/OUT] Novo post do Prof. Bruce Banner em LPOO.</p>
+                    <p style="margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">[25/OUT] Prazo final para o Trabalho 1 de Redes de Computadores. (Urgente)</p>
+                    <p style="margin-top: 10px;">[15/OUT] Sua nota final foi lançada em 'Lógica de Programação'.</p>
+                </div>
+            </section>
+            <section data-section-content="configuracoes" style="display: none;">
+                <h1 style="padding-top:20px;">Configurações e Perfil</h1>
+                <div class="card" style="padding: 20px;">
+                    <h2>Configurações do Usuário</h2>
+                    <p style="color: var(--text-gray); margin-bottom: 15px;">Ajuste suas preferências de conta e notificações.</p>
+                    <button class="new-post-btn" style="width: 250px;" title="Ver Informações Pessoais"><i class='bx bxs-user-detail'></i>Ver Informações Pessoais</button>
+                    <div style="margin-top: 15px;">
+                         <p id="account-status-display">Conta Logada: <span style="font-weight: 700;">--</span></p> 
+                         <p style="margin-bottom: 5px;">Idioma: <span style="font-weight: 700;">Português (Brasil)</span></p>
+                         <p>Fuso Horário: <span style="font-weight: 700;">GMT-3 (Fortaleza)</span></p>
+                    </div>
+                    <button id="logout-btn" class="new-post-btn" style="width: 250px; margin-top: 25px; background-color: #ef4444;" title="Sair da Conta">
+                        <i class='bx bx-log-out'></i>Sair da Conta
+                    </button>
+                </div>
+            </section>
+            <section data-section-content="comunicacao" style="display: none;">
+                <h1 style="padding-top:20px;">Comunicação</h1>
+                <p class="card" style="padding: 20px;">Chat e Fóruns de Comunicação.</p>
+            </section>
+            
+        </main>
+    </div>
+
+<script src="js/script.js"></script>
+<script src="js/voice_module.js"></script>
+
+</body>
+</html>

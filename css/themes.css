@@ -1,0 +1,96 @@
+:root {
+    --background-dark: #12121D; 
+    --surface-dark: #1F1F35;   
+    --sidebar-dark: rgba(31, 31, 53, 0.95); 
+    --text-light: #F0E6F6;     
+    --text-gray: #B0A1C7;      
+    --primary-color: #7B3EED;   
+    --primary-light: #9B6FFF;   
+    --accent-color: #4A90E2;    
+    --border-color: #33334F;    
+    --shadow-color: rgba(0, 0, 0, 0.5); 
+    --card-radius: 15px; 
+}
+
+.light-mode {
+    --background-dark: #F5F0FF; 
+    --surface-dark: #FFFFFF;    
+    --sidebar-dark: #FFFFFF;    
+    --text-light: #3A236C;      
+    --text-gray: #7F6F9F;       
+    --primary-light: #6E2FC0;   
+    --primary-color: #7B3EED;   
+    --accent-color: #D6E8F8;    
+    --border-color: #E0D9ED;    
+    --shadow-color: rgba(0, 0, 0, 0.1); 
+}
+
+.accessibility-toggle {
+    color: var(--primary-color) !important;
+}
+
+.high-contrast {
+    --background-dark: #111111 !important; 
+    --surface-dark: #1A1A1A !important; 
+    --sidebar-dark: #111111 !important; 
+    --text-light: #ffffff !important;      
+    --text-gray: #cccccc !important;       
+    --primary-color: #FFFF00 !important;  
+    --primary-light: #00FFFF !important;   
+    --accent-color: #333333 !important;    
+    --border-color: #666666 !important;    
+    --shadow-color: rgba(255, 255, 255, 0.2) !important; 
+    filter: none;
+}
+
+/* REGRA ATUALIZADA COMPLETA */
+.high-contrast .nav-links a,
+.high-contrast .bx,
+.high-contrast .options-btn,
+.high-contrast .input-group i,
+.high-contrast .delivery-item i,
+.high-contrast .task-item p,
+.high-contrast .task-item h3,
+.high-contrast .status,
+.high-contrast .mural-header h3,
+.high-contrast .download-button { 
+    color: var(--text-light) !important; 
+    text-shadow: none !important;
+}
+
+.high-contrast .material-item i {
+     filter: none;
+     color: var(--primary-color) !important;
+}
+
+.high-contrast .new-post-btn {
+    background-color: #333333 !important; 
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important; 
+    box-shadow: none !important;
+}
+
+.light-mode.high-contrast {
+    --background-dark: #ffffff !important; 
+    --surface-dark: #f0f0f0 !important;    
+    --sidebar-dark: #ffffff !important;    
+    --text-light: #000000 !important;      
+    --text-gray: #333333 !important;       
+    --primary-color: #000000 !important;  
+    --primary-light: #333333 !important;
+    --accent-color: #eeeeee !important;   
+    --border-color: #000000 !important;    
+    --shadow-color: rgba(0, 0, 0, 0.3) !important; 
+    filter: none;
+}
+.light-mode.high-contrast .nav-links a,
+.light-mode.high-contrast .bx,
+.light-mode.high-contrast .options-btn,
+.light-mode.high-contrast .delivery-item i,
+.light-mode.high-contrast .task-item p,
+.light-mode.high-contrast .task-item h3,
+.light-mode.high-contrast .status,
+.light-mode.high-contrast .mural-header h3 {
+    color: var(--text-light) !important; 
+    text-shadow: none !important;
+}
